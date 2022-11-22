@@ -27,7 +27,7 @@ multi-datasource:
   datasource:
     druid:
       # 如果是 JNDI 模式，需要配置改项
-      jndiDataSourceName: java:jboss/txn_log_OracleXADS
+      jndiDataSourceName: java:jboss/second_OracleXADS
 
       # 如果是 XA 模式，根据实际情况，需配置如下
       basePackages: com.joeylee.mapper.second

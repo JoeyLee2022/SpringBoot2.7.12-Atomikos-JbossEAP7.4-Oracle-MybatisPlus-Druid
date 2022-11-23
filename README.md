@@ -4,6 +4,11 @@
 
 Atomikos 用来处理分布式事务
 
+## 项目地址
+
+https://github.com/JoeyLee2022/SpringBoot2.5-Atomikos-Oracle-MybatisPlus-Druid-.git
+https://gitee.com/lee843416545/springboot2.5-atomikos-jbosseap7.4-oracle-mybatisplus-druid.git
+
 ## 配置数据源
 
 ### 通用 数据源配置
@@ -375,7 +380,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @ConditionalOnProperty(value = "multi-datasource.enabled")
-public class TxnLogAspect {
+public class SecondAspect {
 
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -503,7 +508,7 @@ import org.springframework.context.annotation.Configuration;
  * @author joeylee
  */
 @Configuration
-@MapperScan(basePackages = "${spring.datasource.druid.basePackages:com.lee.mbk.call.test.mapper}", sqlSessionTemplateRef = PrimaryDataSource.sessionTemplate, sqlSessionFactoryRef = PrimaryDataSource.sessionFactory)
+@MapperScan(basePackages = "${spring.datasource.druid.basePackages:com.fubon.mbk.call.test.mapper}", sqlSessionTemplateRef = PrimaryDataSource.sessionTemplate, sqlSessionFactoryRef = PrimaryDataSource.sessionFactory)
 @ConditionalOnProperty(value = "multi-datasource.enabled", havingValue = "JNDI")
 public class PrimaryJndiDataSourceConfig extends JndiDataSourceConfig {
 
@@ -563,7 +568,7 @@ import org.springframework.context.annotation.Configuration;
  * @author joeylee
  */
 @Configuration
-@MapperScan(basePackages = "${multi-datasource.datasource.druid.basePackages:com.lee.mbk.common.mapper}", sqlSessionTemplateRef = SecondDataSource.sessionTemplate, sqlSessionFactoryRef = SecondDataSource.sessionFactory)
+@MapperScan(basePackages = "${multi-datasource.datasource.druid.basePackages:com.fubon.mbk.common.mapper}", sqlSessionTemplateRef = SecondDataSource.sessionTemplate, sqlSessionFactoryRef = SecondDataSource.sessionFactory)
 @ConditionalOnProperty(value = "multi-datasource.enabled", havingValue = "JNDI")
 public class SecondJndiDataSourceConfig extends JndiDataSourceConfig {
 
@@ -839,7 +844,65 @@ public class MultiDataSourceController {
 
 ## 配置文件
 
-```
+```yaml
+spring:
+  application:
+    name: boot-atomikos
+  datasource:
+    druid:
+      # 如果是 JNDI 模式，需要配置改项
+      jndiDataSourceName: java:jboss/primary_OracleXADS
+
+      # 如果是 XA 模式，根据实际情况，需配置如下
+      basePackages: com.joeylee.mapper.primary
+      xmlPath: classpath*:mapper/primary/*.xml
+      uniqueResourceName: oracle 1
+
+      url: jdbc:oracle:thin:@127.0.0.1:1521/ORACLE
+      username: lee_account_dev
+      password: lee123456
+      #      driver: oracle.jdbc.driver.OracleDriver
+      initial-size: 5
+      max-active: 20
+      min-idle: 10
+      max-wait: 10
+
+
+# 多数据源配置
+multi-datasource:
+  enabled: XA
+  datasource:
+    druid:
+      # 如果是 JNDI 模式，需要配置改项
+      jndiDataSourceName: java:jboss/second_OracleXADS
+
+      # 如果是 XA 模式，根据实际情况，需配置如下
+      basePackages: com.joeylee.mapper.second
+      xmlPath: classpath*:mapper/second/*.xml
+      uniqueResourceName: oracle 2
+
+      url: jdbc:oracle:thin:@127.0.0.1:1521/ORACLE
+      username: lee
+      password: lee123456
+      initialSize: 5
+      maxActive: 20
+      minIdle: 10
+      maxWait: 10
+
+#日志打印
+logging:
+  # 配置级别
+  level:
+    #分包配置级别，即不同的目录下可以使用不同的级别
+    com: debug
+
+joeylee:
+  # 全局响应结果处理
+  response-handler:
+    enable: true
+  # 全局异常处理
+  exception-handler:
+    enable: true
 
 ```
 

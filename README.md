@@ -26,7 +26,7 @@ Atomikos 用来处理分布式事务
 ## 项目地址
 
 https://github.com/JoeyLee2022/SpringBoot2.5-Atomikos-Oracle-MybatisPlus-Druid-.git
-https://gitee.com/lee843416545/springboot2.5-atomikos-jbosseap7.4-oracle-mybatisplus-druid.git
+https://gitee.com/lee843416545/SpringBoot2.7.5-Atomikos-JbossEAP7.4-Oracle-MybatisPlus-Druid.git
 
 ## 配置数据源
 

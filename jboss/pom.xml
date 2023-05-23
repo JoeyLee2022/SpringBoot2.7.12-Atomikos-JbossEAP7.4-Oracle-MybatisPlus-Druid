@@ -38,6 +38,7 @@
       <groupId>javax.servlet</groupId>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <artifactId>spring-boot-starter-test</artifactId>
       <exclusions>

@@ -1,15 +1,20 @@
 spring:
   application:
-    name: boot-jboss
+    name: boot-atomikos
   datasource:
     druid:
       # 如果是 JNDI 模式，需要配置该项
       jndiDataSourceName: java:jboss/primary_OracleXADS
 
-      # 如果是 XA 模式，根据实际情况，需配置如下
-      basePackages: com.joeylee.mapper.primary
+      # 如果是XA 模式，根据实际情况，需配置如下
+      # Mybatis的mapper接口文件路径
+      basePackages:
+        -com.joeylee.mapper.primary
+        -com.joey2lee.mapper.primary
+      # Mybatis的mapper的xml文件路径
       xmlPath: classpath*:mapper/primary/*.xml
-      uniqueResourceName: oracle 1
+      # atomikos 资源名称,每个数据源必须唯一
+      uniqueResourceName: primary_OracleXADS
 
       url: jdbc:oracle:thin:@10.1.107.105:1521/ORACLEPDB
       username: fubon_account_dev

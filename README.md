@@ -1,6 +1,6 @@
-# SpringBoot2.7.5 + Atomikos + JbossEAP7.4 + Oracle + MybatisPlus + Druid 配置多数据源
+# SpringBoot2.7.12 + Atomikos + JbossEAP7.4 + Oracle + MybatisPlus + Druid 配置多数据源
 
-基于springboot最新版本2.7.5版本，
+基于springboot最新版本2.7.12版本，
 
 oracle数据库需开启XA协议
 
@@ -15,8 +15,6 @@ grant execute on sys.dbms_system to USER_NAME
 
 USER_NAME为需要配置XA数据源的用户
 
-
-
 集成MybatisPlus，
 
 用Druid作为数据库连接池
@@ -26,7 +24,7 @@ Atomikos 用来处理分布式事务
 ## 项目地址
 
 https://github.com/JoeyLee2022/SpringBoot2.5-Atomikos-Oracle-MybatisPlus-Druid-.git
-https://gitee.com/lee843416545/SpringBoot2.7.5-Atomikos-JbossEAP7.4-Oracle-MybatisPlus-Druid.git
+https://gitee.com/lee843416545/springboot2.5-atomikos-jbosseap7.4-oracle-mybatisplus-druid.git
 
 ## 配置数据源
 
@@ -50,7 +48,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 /**
  * 通用 数据源配置
  *
- * @author joeylee
+ * @author JoeyLee
  */
 public class BaseDataSourceConfig {
 
@@ -132,7 +130,7 @@ import org.springframework.context.annotation.DependsOn;
 /**
  * 主数据源配置
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @Configuration
 @MapperScan(basePackages = "${spring.datasource.druid.basePackages:com.joeylee.mapper.primary}", sqlSessionTemplateRef = PrimaryDataSource.sessionTemplate, sqlSessionFactoryRef = PrimaryDataSource.sessionFactory)
@@ -190,7 +188,7 @@ import org.springframework.context.annotation.DependsOn;
 /**
  * 次数据源配置
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @Configuration
 @MapperScan(basePackages = "${multi-datasource.datasource.druid.basePackages:com.joeylee.mapper.second}", sqlSessionTemplateRef = SecondDataSource.sessionTemplate, sqlSessionFactoryRef = SecondDataSource.sessionFactory)
@@ -245,7 +243,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 多数据源属性 配置
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @Configuration
 @ConditionalOnProperty(value = "multi-datasource.enabled", havingValue = "XA")
@@ -274,7 +272,7 @@ import com.alibaba.druid.pool.xa.DruidXADataSource;
 /**
  * 数据源 配置信息
  *
- * @author joeylee
+ * @author JoeyLee
  */
 public class CommonDatasourceProperties extends DruidXADataSource {
 
@@ -327,7 +325,7 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 /**
  * XA 分布式事务 配置
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @Configuration
 @EnableTransactionManagement
@@ -393,7 +391,7 @@ import org.springframework.stereotype.Component;
 /**
  * 交易历史 数据源切面
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @Aspect
 @Component
@@ -433,7 +431,7 @@ import org.springframework.context.annotation.DependsOn;
 /**
  * JNDI 数据源配置
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @DependsOn(JndiConstant.DataSourceJndiConfig)
 @ConditionalOnProperty(value = "multi-datasource.enabled", havingValue = "JNDI")
@@ -483,7 +481,7 @@ package com.joeylee.domain.properties;
 /**
  * JNDI 数据源 配置信息
  *
- * @author joeylee
+ * @author JoeyLee
  */
 public class JndiDatasourceProperties extends
     CommonDatasourceProperties {
@@ -520,7 +518,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * JNDI 主数据源配置
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @Configuration
 @MapperScan(basePackages = "${spring.datasource.druid.basePackages:com.fubon.mbk.call.test.mapper}", sqlSessionTemplateRef = PrimaryDataSource.sessionTemplate, sqlSessionFactoryRef = PrimaryDataSource.sessionFactory)
@@ -578,7 +576,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * JNDI 次数据源配置
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @Configuration
 @MapperScan(basePackages = "${multi-datasource.datasource.druid.basePackages:com.fubon.mbk.common.mapper}", sqlSessionTemplateRef = SecondDataSource.sessionTemplate, sqlSessionFactoryRef = SecondDataSource.sessionFactory)
@@ -748,7 +746,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 多数据源 服务类
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @Service
 public class MultiDataSourceService {
@@ -818,7 +816,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 多数据 分布式事务 测试接口
  *
- * @author joeylee
+ * @author JoeyLee
  */
 @RestController
 @RequestMapping("/multiDataSource")

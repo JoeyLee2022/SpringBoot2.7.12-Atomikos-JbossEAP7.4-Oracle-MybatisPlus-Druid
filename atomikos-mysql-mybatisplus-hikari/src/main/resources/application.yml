@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: boot-atomikos
+  datasource:
+    # 如果是 JNDI 模式，需要配置该项
+    jndiDataSourceName: java:jboss/primaryDS
+
+    # 如果是XA 模式，根据实际情况，需配置如下
+    # Mybatis的mapper接口文件路径
+    basePackages:
+      - com.joeylee.mapper.primary
+      - com.joey2lee.mapper.primary
+    # Mybatis的mapper的xml文件路径
+    xmlPath: classpath*:mapper/primary/*.xml
+    # atomikos 资源名称,每个数据源必须唯一
+    uniqueResourceName: primaryDS
+
+    url: jdbc:mysql://127.0.0.1:3306/db1?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    user: root
+    password: 123456
+    #      driver: oracle.jdbc.driver.OracleDriver
+    initial-size: 5
+    max-active: 20
+    min-idle: 10
+    max-wait: 10
+
+
+# 多数据源配置
+multi-datasource:
+  enabled: XA
+  datasource:
+    # 如果是 JNDI 模式，需要配置该项
+    jndiDataSourceName: java:jboss/secondDS
+
+    # 如果是 XA 模式，根据实际情况，需配置如下
+    basePackages: com.joeylee.mapper.second
+    xmlPath: classpath*:mapper/second/*.xml
+    uniqueResourceName: secondDS
+
+    url: jdbc:mysql://172.21.93.15:3307/batch?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    user: root
+    password: password
+    initialSize: 5
+    maxActive: 20
+    minIdle: 10
+    maxWait: 10
+
+#日志打印
+logging:
+  # 配置级别
+  level:
+    #分包配置级别，即不同的目录下可以使用不同的级别
+    com: debug
+
+joeylee:
+  # 全局响应结果处理
+  response-handler:
+    enable: true
+  # 全局异常处理
+  exception-handler:
+    enable: true
